@@ -1,0 +1,423 @@
+{
+  "name": "Mapa Grande",
+  "description": "Malha aérea experimental completa com 40 aeroportos para os testes da Fase 1.",
+  "airports": [
+    "SEA",
+    "PDX",
+    "BOI",
+    "SFO",
+    "SJC",
+    "LAX",
+    "SAN",
+    "LAS",
+    "PHX",
+    "SLC",
+    "DEN",
+    "ABQ",
+    "DFW",
+    "IAH",
+    "AUS",
+    "MCI",
+    "OMA",
+    "STL",
+    "MSP",
+    "ORD",
+    "DTW",
+    "IND",
+    "CLE",
+    "BNA",
+    "MEM",
+    "MSY",
+    "ATL",
+    "CLT",
+    "RDU",
+    "JAX",
+    "MCO",
+    "TPA",
+    "MIA",
+    "IAD",
+    "BWI",
+    "PHL",
+    "PIT",
+    "EWR",
+    "JFK",
+    "BOS"
+  ],
+  "flights": [
+    {
+      "origin": "SEA",
+      "destination": "PDX",
+      "distance": 208
+    },
+    {
+      "origin": "SEA",
+      "destination": "SLC",
+      "distance": 969
+    },
+    {
+      "origin": "SEA",
+      "destination": "BOI",
+      "distance": 643
+    },
+    {
+      "origin": "PDX",
+      "destination": "BOI",
+      "distance": 555
+    },
+    {
+      "origin": "PDX",
+      "destination": "SFO",
+      "distance": 830
+    },
+    {
+      "origin": "BOI",
+      "destination": "SLC",
+      "distance": 466
+    },
+    {
+      "origin": "BOI",
+      "destination": "DEN",
+      "distance": 1040
+    },
+    {
+      "origin": "SFO",
+      "destination": "SJC",
+      "distance": 48
+    },
+    {
+      "origin": "SFO",
+      "destination": "LAX",
+      "distance": 543
+    },
+    {
+      "origin": "SJC",
+      "destination": "LAX",
+      "distance": 496
+    },
+    {
+      "origin": "SJC",
+      "destination": "SAN",
+      "distance": 459
+    },
+    {
+      "origin": "LAX",
+      "destination": "SAN",
+      "distance": 179
+    },
+    {
+      "origin": "LAX",
+      "destination": "LAS",
+      "distance": 367
+    },
+    {
+      "origin": "SAN",
+      "destination": "PHX",
+      "distance": 480
+    },
+    {
+      "origin": "LAS",
+      "destination": "PHX",
+      "distance": 411
+    },
+    {
+      "origin": "LAS",
+      "destination": "SLC",
+      "distance": 590
+    },
+    {
+      "origin": "LAS",
+      "destination": "DEN",
+      "distance": 1015
+    },
+    {
+      "origin": "PHX",
+      "destination": "ABQ",
+      "distance": 529
+    },
+    {
+      "origin": "PHX",
+      "destination": "DEN",
+      "distance": 967
+    },
+    {
+      "origin": "SLC",
+      "destination": "DEN",
+      "distance": 629
+    },
+    {
+      "origin": "ABQ",
+      "destination": "DEN",
+      "distance": 569
+    },
+    {
+      "origin": "ABQ",
+      "destination": "DFW",
+      "distance": 918
+    },
+    {
+      "origin": "DEN",
+      "destination": "DFW",
+      "distance": 1037
+    },
+    {
+      "origin": "DEN",
+      "destination": "ORD",
+      "distance": 1430
+    },
+    {
+      "origin": "DFW",
+      "destination": "IAH",
+      "distance": 362
+    },
+    {
+      "origin": "DFW",
+      "destination": "AUS",
+      "distance": 293
+    },
+    {
+      "origin": "DFW",
+      "destination": "MCI",
+      "distance": 782
+    },
+    {
+      "origin": "IAH",
+      "destination": "AUS",
+      "distance": 225
+    },
+    {
+      "origin": "IAH",
+      "destination": "MSY",
+      "distance": 305
+    },
+    {
+      "origin": "AUS",
+      "destination": "MCI",
+      "distance": 1040
+    },
+    {
+      "origin": "MCI",
+      "destination": "OMA",
+      "distance": 269
+    },
+    {
+      "origin": "MCI",
+      "destination": "STL",
+      "distance": 393
+    },
+    {
+      "origin": "OMA",
+      "destination": "MSP",
+      "distance": 452
+    },
+    {
+      "origin": "OMA",
+      "destination": "ORD",
+      "distance": 692
+    },
+    {
+      "origin": "STL",
+      "destination": "ORD",
+      "distance": 423
+    },
+    {
+      "origin": "STL",
+      "destination": "IND",
+      "distance": 383
+    },
+    {
+      "origin": "STL",
+      "destination": "MEM",
+      "distance": 389
+    },
+    {
+      "origin": "MSP",
+      "destination": "ORD",
+      "distance": 539
+    },
+    {
+      "origin": "MSP",
+      "destination": "DTW",
+      "distance": 692
+    },
+    {
+      "origin": "ORD",
+      "destination": "DTW",
+      "distance": 383
+    },
+    {
+      "origin": "ORD",
+      "destination": "CLE",
+      "distance": 511
+    },
+    {
+      "origin": "IND",
+      "destination": "DTW",
+      "distance": 382
+    },
+    {
+      "origin": "IND",
+      "destination": "CLE",
+      "distance": 423
+    },
+    {
+      "origin": "IND",
+      "destination": "BNA",
+      "distance": 390
+    },
+    {
+      "origin": "CLE",
+      "destination": "DTW",
+      "distance": 153
+    },
+    {
+      "origin": "CLE",
+      "destination": "PIT",
+      "distance": 184
+    },
+    {
+      "origin": "CLE",
+      "destination": "BNA",
+      "distance": 687
+    },
+    {
+      "origin": "BNA",
+      "destination": "MEM",
+      "distance": 306
+    },
+    {
+      "origin": "BNA",
+      "destination": "ATL",
+      "distance": 340
+    },
+    {
+      "origin": "MEM",
+      "destination": "MSY",
+      "distance": 507
+    },
+    {
+      "origin": "MSY",
+      "destination": "ATL",
+      "distance": 690
+    },
+    {
+      "origin": "MSY",
+      "destination": "MCO",
+      "distance": 551
+    },
+    {
+      "origin": "ATL",
+      "destination": "CLT",
+      "distance": 365
+    },
+    {
+      "origin": "ATL",
+      "destination": "MIA",
+      "distance": 960
+    },
+    {
+      "origin": "ATL",
+      "destination": "JAX",
+      "distance": 450
+    },
+    {
+      "origin": "CLT",
+      "destination": "RDU",
+      "distance": 209
+    },
+    {
+      "origin": "CLT",
+      "destination": "JAX",
+      "distance": 526
+    },
+    {
+      "origin": "CLT",
+      "destination": "IAD",
+      "distance": 364
+    },
+    {
+      "origin": "RDU",
+      "destination": "IAD",
+      "distance": 352
+    },
+    {
+      "origin": "RDU",
+      "destination": "JFK",
+      "distance": 428
+    },
+    {
+      "origin": "JAX",
+      "destination": "MCO",
+      "distance": 226
+    },
+    {
+      "origin": "JAX",
+      "destination": "MIA",
+      "distance": 539
+    },
+    {
+      "origin": "MCO",
+      "destination": "TPA",
+      "distance": 124
+    },
+    {
+      "origin": "MCO",
+      "destination": "MIA",
+      "distance": 330
+    },
+    {
+      "origin": "TPA",
+      "destination": "MIA",
+      "distance": 330
+    },
+    {
+      "origin": "IAD",
+      "destination": "BWI",
+      "distance": 64
+    },
+    {
+      "origin": "IAD",
+      "destination": "PHL",
+      "distance": 192
+    },
+    {
+      "origin": "BWI",
+      "destination": "PHL",
+      "distance": 144
+    },
+    {
+      "origin": "BWI",
+      "destination": "EWR",
+      "distance": 280
+    },
+    {
+      "origin": "PHL",
+      "destination": "PIT",
+      "distance": 430
+    },
+    {
+      "origin": "PHL",
+      "destination": "EWR",
+      "distance": 130
+    },
+    {
+      "origin": "PIT",
+      "destination": "EWR",
+      "distance": 508
+    },
+    {
+      "origin": "EWR",
+      "destination": "JFK",
+      "distance": 33
+    },
+    {
+      "origin": "EWR",
+      "destination": "BOS",
+      "distance": 306
+    },
+    {
+      "origin": "JFK",
+      "destination": "BOS",
+      "distance": 300
+    }
+  ]
+}
