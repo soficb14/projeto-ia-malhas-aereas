@@ -22,7 +22,7 @@ def test_flight_distance_is_not_smaller_than_straight_line_distance(
     """
     Verifica a condição necessária para a admissibilidade da heurística.
 
-    Para cada voo do mapa:
+    Para cada voo:
 
         distância do voo >= distância em linha reta
 

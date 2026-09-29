@@ -1,253 +1,273 @@
 {
   "name": "Mapa Médio",
-  "description": "Malha aérea experimental com 25 aeroportos para os testes da Fase 1.",
+  "description": "Malha aérea experimental com 25 aeroportos, contendo o mapa pequeno como subconjunto para os testes da Fase 1.",
   "airports": [
+    "ATL",
+    "CLT",
+    "MIA",
+    "DFW",
+    "IAH",
+    "DEN",
+    "ORD",
+    "JFK",
+    "BOS",
+    "LAX",
     "SEA",
     "PDX",
-    "BOI",
     "SFO",
-    "SJC",
-    "LAX",
     "SAN",
     "LAS",
     "PHX",
-    "SLC",
-    "DEN",
     "ABQ",
-    "DFW",
-    "IAH",
-    "AUS",
-    "MCI",
-    "OMA",
     "STL",
-    "MSP",
-    "ORD",
-    "DTW",
     "IND",
     "CLE",
     "BNA",
-    "MEM"
+    "MEM",
+    "MSP",
+    "DTW",
+    "PHL"
   ],
   "flights": [
     {
-      "origin": "SEA",
-      "destination": "PDX",
-      "distance": 209
+      "origin": "ATL",
+      "destination": "CLT",
+      "distance": 365
     },
     {
-      "origin": "PDX",
-      "destination": "BOI",
-      "distance": 555
+      "origin": "ATL",
+      "destination": "MIA",
+      "distance": 960
     },
     {
-      "origin": "PDX",
-      "destination": "SFO",
-      "distance": 887
-    },
-    {
-      "origin": "BOI",
-      "destination": "SLC",
-      "distance": 467
-    },
-    {
-      "origin": "BOI",
-      "destination": "DEN",
-      "distance": 1043
-    },
-    {
-      "origin": "SFO",
-      "destination": "SJC",
-      "distance": 50
-    },
-    {
-      "origin": "SFO",
-      "destination": "LAX",
-      "distance": 544
-    },
-    {
-      "origin": "SJC",
-      "destination": "LAX",
-      "distance": 496
-    },
-    {
-      "origin": "LAX",
-      "destination": "SAN",
-      "distance": 179
-    },
-    {
-      "origin": "LAX",
-      "destination": "LAS",
-      "distance": 381
-    },
-    {
-      "origin": "SAN",
-      "destination": "PHX",
-      "distance": 489
-    },
-    {
-      "origin": "LAS",
-      "destination": "PHX",
-      "distance": 412
-    },
-    {
-      "origin": "LAS",
-      "destination": "DEN",
-      "distance": 1015
-    },
-    {
-      "origin": "PHX",
-      "destination": "ABQ",
-      "distance": 529
-    },
-    {
-      "origin": "PHX",
-      "destination": "DEN",
-      "distance": 969
-    },
-    {
-      "origin": "SLC",
-      "destination": "DEN",
-      "distance": 629
-    },
-    {
-      "origin": "SLC",
-      "destination": "PHX",
-      "distance": 818
-    },
-    {
-      "origin": "ABQ",
-      "destination": "DEN",
-      "distance": 569
-    },
-    {
-      "origin": "ABQ",
+      "origin": "ATL",
       "destination": "DFW",
-      "distance": 918
+      "distance": 1175
     },
     {
-      "origin": "DEN",
-      "destination": "DFW",
-      "distance": 1037
+      "origin": "CLT",
+      "destination": "ATL",
+      "distance": 365
     },
     {
-      "origin": "DEN",
-      "destination": "ORD",
-      "distance": 1430
+      "origin": "CLT",
+      "destination": "JFK",
+      "distance": 875
+    },
+    {
+      "origin": "MIA",
+      "destination": "ATL",
+      "distance": 961
+    },
+    {
+      "origin": "MIA",
+      "destination": "JFK",
+      "distance": 1760
     },
     {
       "origin": "DFW",
       "destination": "IAH",
-      "distance": 362
+      "distance": 363
     },
     {
       "origin": "DFW",
-      "destination": "AUS",
-      "distance": 307
+      "destination": "DEN",
+      "distance": 1038
     },
     {
       "origin": "DFW",
-      "destination": "MCI",
-      "distance": 782
-    },
-    {
-      "origin": "IAH",
-      "destination": "AUS",
-      "distance": 226
-    },
-    {
-      "origin": "IAH",
-      "destination": "STL",
-      "distance": 1075
-    },
-    {
-      "origin": "AUS",
-      "destination": "MCI",
-      "distance": 1048
-    },
-    {
-      "origin": "MCI",
-      "destination": "OMA",
-      "distance": 269
-    },
-    {
-      "origin": "MCI",
-      "destination": "STL",
-      "distance": 393
-    },
-    {
-      "origin": "OMA",
-      "destination": "MSP",
-      "distance": 454
-    },
-    {
-      "origin": "OMA",
       "destination": "ORD",
-      "distance": 692
+      "distance": 1291
+    },
+    {
+      "origin": "IAH",
+      "destination": "MIA",
+      "distance": 1551
+    },
+    {
+      "origin": "IAH",
+      "destination": "DEN",
+      "distance": 1390
+    },
+    {
+      "origin": "DEN",
+      "destination": "LAX",
+      "distance": 1391
+    },
+    {
+      "origin": "DEN",
+      "destination": "ORD",
+      "distance": 1431
+    },
+    {
+      "origin": "ORD",
+      "destination": "JFK",
+      "distance": 1194
+    },
+    {
+      "origin": "ORD",
+      "destination": "BOS",
+      "distance": 1396
+    },
+    {
+      "origin": "JFK",
+      "destination": "BOS",
+      "distance": 301
+    },
+    {
+      "origin": "JFK",
+      "destination": "LAX",
+      "distance": 3981
+    },
+    {
+      "origin": "BOS",
+      "destination": "JFK",
+      "distance": 301
+    },
+    {
+      "origin": "LAX",
+      "destination": "DEN",
+      "distance": 1391
+    },
+    {
+      "origin": "SEA",
+      "destination": "PDX",
+      "distance": 210
+    },
+    {
+      "origin": "PDX",
+      "destination": "SFO",
+      "distance": 888
+    },
+    {
+      "origin": "SFO",
+      "destination": "LAX",
+      "distance": 545
+    },
+    {
+      "origin": "LAX",
+      "destination": "SAN",
+      "distance": 180
+    },
+    {
+      "origin": "LAX",
+      "destination": "LAS",
+      "distance": 382
+    },
+    {
+      "origin": "SAN",
+      "destination": "PHX",
+      "distance": 490
+    },
+    {
+      "origin": "LAS",
+      "destination": "PHX",
+      "distance": 413
+    },
+    {
+      "origin": "LAS",
+      "destination": "DEN",
+      "distance": 1016
+    },
+    {
+      "origin": "PHX",
+      "destination": "ABQ",
+      "distance": 530
+    },
+    {
+      "origin": "PHX",
+      "destination": "DEN",
+      "distance": 970
+    },
+    {
+      "origin": "ABQ",
+      "destination": "DEN",
+      "distance": 570
+    },
+    {
+      "origin": "ABQ",
+      "destination": "DFW",
+      "distance": 919
     },
     {
       "origin": "STL",
       "destination": "ORD",
-      "distance": 423
+      "distance": 424
     },
     {
       "origin": "STL",
       "destination": "IND",
-      "distance": 383
+      "distance": 384
     },
     {
-      "origin": "MSP",
-      "destination": "ORD",
-      "distance": 539
+      "origin": "STL",
+      "destination": "MEM",
+      "distance": 415
     },
     {
-      "origin": "MSP",
-      "destination": "DTW",
-      "distance": 849
-    },
-    {
-      "origin": "ORD",
+      "origin": "IND",
       "destination": "DTW",
       "distance": 383
     },
     {
-      "origin": "ORD",
-      "destination": "CLE",
-      "distance": 511
-    },
-    {
-      "origin": "IND",
-      "destination": "DTW",
-      "distance": 382
-    },
-    {
       "origin": "IND",
       "destination": "CLE",
-      "distance": 423
+      "distance": 424
     },
     {
       "origin": "IND",
       "destination": "BNA",
-      "distance": 401
+      "distance": 402
     },
     {
       "origin": "CLE",
       "destination": "DTW",
-      "distance": 154
+      "distance": 155
     },
     {
       "origin": "CLE",
       "destination": "BNA",
-      "distance": 722
+      "distance": 723
     },
     {
       "origin": "BNA",
       "destination": "MEM",
-      "distance": 322
+      "distance": 323
     },
     {
       "origin": "MEM",
       "destination": "STL",
-      "distance": 414
+      "distance": 415
+    },
+    {
+      "origin": "MSP",
+      "destination": "ORD",
+      "distance": 540
+    },
+    {
+      "origin": "MSP",
+      "destination": "DTW",
+      "distance": 850
+    },
+    {
+      "origin": "ORD",
+      "destination": "DTW",
+      "distance": 384
+    },
+    {
+      "origin": "ORD",
+      "destination": "CLE",
+      "distance": 512
+    },
+    {
+      "origin": "PHL",
+      "destination": "JFK",
+      "distance": 151
+    },
+    {
+      "origin": "JFK",
+      "destination": "PHL",
+      "distance": 152
     }
   ]
 }
