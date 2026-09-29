@@ -9,9 +9,10 @@ from .search.result import SearchResult
 @dataclass
 class ExperimentResult:
     """
-    Resultado da execução de uma estratégia de busca.
+    Resultado de uma execução de busca.
     """
 
+    map_name: str
     algorithm: str
     start: str
     goal: str
@@ -22,6 +23,7 @@ class ExperimentResult:
 
 
 def run_experiment(
+    map_name: str,
     algorithm: str,
     search_function: Callable[
         [AirNetwork, str, str],
@@ -32,12 +34,13 @@ def run_experiment(
     goal: str,
 ) -> ExperimentResult:
     """
-    Executa uma busca e registra suas métricas experimentais.
+    Executa uma estratégia de busca e registra suas métricas.
 
     Mede:
     - custo da rota;
     - nós expandidos;
-    - tempo de execução.
+    - tempo de execução;
+    - caminho encontrado.
     """
 
     start_time = perf_counter()
@@ -54,16 +57,18 @@ def run_experiment(
 
     if result is None:
         return ExperimentResult(
+            map_name=map_name,
             algorithm=algorithm,
             start=start,
             goal=goal,
             cost=None,
-            expanded_nodes=result.expanded_nodes if result else 0,
+            expanded_nodes=0,
             execution_time_ms=execution_time_ms,
             path=[],
         )
 
     return ExperimentResult(
+        map_name=map_name,
         algorithm=algorithm,
         start=start,
         goal=goal,
