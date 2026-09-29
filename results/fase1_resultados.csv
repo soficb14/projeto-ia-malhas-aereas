@@ -1,0 +1,7 @@
+mapa,algoritmo,origem,destino,custo_km,nos_expandidos,tempo_ms,rota
+pequeno,BFS,ATL,LAX,4500.0,1,0.019378,ATL -> LAX
+pequeno,A*,ATL,LAX,3601.0,4,0.080768,ATL -> DFW -> DEN -> LAX
+medio,BFS,SEA,MEM,4737.0,22,0.020350,SEA -> PDX -> BOI -> DEN -> ORD -> CLE -> BNA -> MEM
+medio,A*,SEA,MEM,4737.0,23,0.054116,SEA -> PDX -> BOI -> DEN -> ORD -> CLE -> BNA -> MEM
+grande,BFS,SEA,BOS,4537.0,30,0.022584,SEA -> SLC -> DEN -> ORD -> CLE -> PIT -> EWR -> BOS
+grande,A*,SEA,BOS,4537.0,12,0.029097,SEA -> SLC -> DEN -> ORD -> CLE -> PIT -> EWR -> BOS
