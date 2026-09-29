@@ -161,6 +161,11 @@
     },
     {
       "origin": "DEN",
+      "destination": "LAX",
+      "distance": 1400
+    },
+    {
+      "origin": "DEN",
       "destination": "ORD",
       "distance": 1430
     },
@@ -318,6 +323,11 @@
       "origin": "ATL",
       "destination": "JAX",
       "distance": 450
+    },
+    {
+      "origin": "CLT",
+      "destination": "DEN",
+      "distance": 2200
     },
     {
       "origin": "CLT",
