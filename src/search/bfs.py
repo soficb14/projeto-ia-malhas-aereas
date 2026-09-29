@@ -1,19 +1,8 @@
 from collections import deque
-from dataclasses import dataclass
 
 from ..environment.airport import Airport
 from ..environment.graph import AirNetwork
-
-
-@dataclass
-class SearchResult:
-    """
-    Resultado de uma busca no grafo.
-    """
-
-    path: list[Airport]
-    cost: float
-    expanded_nodes: int
+from .result import SearchResult
 
 
 def breadth_first_search(

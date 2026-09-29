@@ -1,21 +1,10 @@
 import heapq
-from dataclasses import dataclass
 from itertools import count
 
 from ..environment.airport import Airport
 from ..environment.graph import AirNetwork
 from .heuristics import straight_line_distance
-
-
-@dataclass
-class SearchResult:
-    """
-    Resultado de uma busca no grafo.
-    """
-
-    path: list[Airport]
-    cost: float
-    expanded_nodes: int
+from .result import SearchResult
 
 
 def a_star_search(
