@@ -45,3 +45,21 @@ def test_astar_start_equals_goal():
     assert [airport.code for airport in result.path] == ["ATL"]
     assert result.cost == 0.0
     assert result.expanded_nodes == 0
+
+
+def test_astar_finds_optimal_cost():
+    network = load_network(MAP_PATH)
+
+    result = a_star_search(
+        network,
+        start="ATL",
+        goal="LAX",
+    )
+
+    assert result is not None
+
+    # No mapa pequeno, a menor rota em distância é:
+    # ATL -> DFW -> DEN -> LAX
+    expected_cost = 1174 + 1037 + 1390
+
+    assert result.cost == expected_cost
