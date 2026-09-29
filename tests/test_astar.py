@@ -1,12 +1,15 @@
 from src.environment.loader import load_network
+
 from src.search.astar import a_star_search
 
-
 MAP_PATH = "data/maps/mapa_pequeno.json"
+AIRPORTS_PATH = "data/maps/airports.json"
 
 
 def test_astar_finds_route():
-    network = load_network(MAP_PATH)
+    network = load_network(
+        MAP_PATH,
+        AIRPORTS_PATH,)
 
     result = a_star_search(
         network,
@@ -20,7 +23,9 @@ def test_astar_finds_route():
 
 
 def test_astar_calculates_path_cost():
-    network = load_network(MAP_PATH)
+    network = load_network(
+        MAP_PATH,
+        AIRPORTS_PATH,)
 
     result = a_star_search(
         network,
@@ -33,7 +38,9 @@ def test_astar_calculates_path_cost():
 
 
 def test_astar_start_equals_goal():
-    network = load_network(MAP_PATH)
+    network = load_network(
+        MAP_PATH,
+        AIRPORTS_PATH,)
 
     result = a_star_search(
         network,
@@ -48,7 +55,9 @@ def test_astar_start_equals_goal():
 
 
 def test_astar_finds_optimal_cost():
-    network = load_network(MAP_PATH)
+    network = load_network(
+        MAP_PATH,
+        AIRPORTS_PATH,)
 
     result = a_star_search(
         network,
