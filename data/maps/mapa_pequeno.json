@@ -12,7 +12,7 @@
     "JFK",
     "BOS",
     "LAX"
-    ],
+  ],
   "flights": [
     {
       "origin": "ATL",
@@ -27,7 +27,7 @@
     {
       "origin": "ATL",
       "destination": "DFW",
-      "distance": 1174
+      "distance": 1175
     },
     {
       "origin": "CLT",
@@ -47,7 +47,7 @@
     {
       "origin": "MIA",
       "destination": "JFK",
-      "distance": 1090
+      "distance": 1757
     },
     {
       "origin": "DFW",
@@ -72,7 +72,7 @@
     {
       "origin": "IAH",
       "destination": "DEN",
-      "distance": 1380
+      "distance": 1387
     },
     {
       "origin": "DEN",
@@ -87,12 +87,12 @@
     {
       "origin": "ORD",
       "destination": "JFK",
-      "distance": 1180
+      "distance": 1189
     },
     {
       "origin": "ORD",
       "destination": "BOS",
-      "distance": 1360
+      "distance": 1391
     },
     {
       "origin": "JFK",
@@ -115,9 +115,9 @@
       "distance": 1390
     },
     {
-    "origin": "ATL",
-    "destination": "LAX",
-    "distance": 4500
+      "origin": "ATL",
+      "destination": "LAX",
+      "distance": 4500
     }
   ]
 }

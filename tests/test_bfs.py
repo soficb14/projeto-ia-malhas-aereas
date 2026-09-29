@@ -86,4 +86,4 @@ def test_bfs_and_astar_can_find_different_costs():
     assert bfs_result.cost > astar_result.cost
 
     assert bfs_result.cost == 4500
-    assert astar_result.cost == 3601
+    assert astar_result.cost == 3602

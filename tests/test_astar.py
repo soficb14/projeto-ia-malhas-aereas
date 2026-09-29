@@ -69,6 +69,6 @@ def test_astar_finds_optimal_cost():
 
     # No mapa pequeno, a menor rota em distância é:
     # ATL -> DFW -> DEN -> LAX
-    expected_cost = 1174 + 1037 + 1390
+    expected_cost = 1175 + 1037 + 1390
 
     assert result.cost == expected_cost
