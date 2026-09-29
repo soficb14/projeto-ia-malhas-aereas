@@ -1,0 +1,168 @@
+{
+  "name": "Mapa Pequeno",
+  "description": "Malha aérea experimental com 10 aeroportos para os testes da Fase 1.",
+  "airports": [
+    {
+      "code": "ATL",
+      "name": "Hartsfield-Jackson Atlanta International Airport",
+      "latitude": 33.6407,
+      "longitude": -84.4277
+    },
+    {
+      "code": "CLT",
+      "name": "Charlotte Douglas International Airport",
+      "latitude": 35.2140,
+      "longitude": -80.9431
+    },
+    {
+      "code": "MIA",
+      "name": "Miami International Airport",
+      "latitude": 25.7959,
+      "longitude": -80.2870
+    },
+    {
+      "code": "DFW",
+      "name": "Dallas/Fort Worth International Airport",
+      "latitude": 32.8998,
+      "longitude": -97.0403
+    },
+    {
+      "code": "IAH",
+      "name": "George Bush Intercontinental Airport",
+      "latitude": 29.9902,
+      "longitude": -95.3368
+    },
+    {
+      "code": "DEN",
+      "name": "Denver International Airport",
+      "latitude": 39.8561,
+      "longitude": -104.6737
+    },
+    {
+      "code": "ORD",
+      "name": "Chicago O'Hare International Airport",
+      "latitude": 41.9742,
+      "longitude": -87.9073
+    },
+    {
+      "code": "JFK",
+      "name": "John F. Kennedy International Airport",
+      "latitude": 40.6413,
+      "longitude": -73.7781
+    },
+    {
+      "code": "BOS",
+      "name": "Boston Logan International Airport",
+      "latitude": 42.3656,
+      "longitude": -71.0096
+    },
+    {
+      "code": "LAX",
+      "name": "Los Angeles International Airport",
+      "latitude": 33.9416,
+      "longitude": -118.4085
+    }
+  ],
+  "flights": [
+    {
+      "origin": "ATL",
+      "destination": "CLT",
+      "distance": 365
+    },
+    {
+      "origin": "ATL",
+      "destination": "MIA",
+      "distance": 960
+    },
+    {
+      "origin": "ATL",
+      "destination": "DFW",
+      "distance": 1174
+    },
+    {
+      "origin": "CLT",
+      "destination": "ATL",
+      "distance": 365
+    },
+    {
+      "origin": "CLT",
+      "destination": "JFK",
+      "distance": 872
+    },
+    {
+      "origin": "MIA",
+      "destination": "ATL",
+      "distance": 960
+    },
+    {
+      "origin": "MIA",
+      "destination": "JFK",
+      "distance": 1090
+    },
+    {
+      "origin": "DFW",
+      "destination": "IAH",
+      "distance": 362
+    },
+    {
+      "origin": "DFW",
+      "destination": "DEN",
+      "distance": 1037
+    },
+    {
+      "origin": "DFW",
+      "destination": "ORD",
+      "distance": 1290
+    },
+    {
+      "origin": "IAH",
+      "destination": "MIA",
+      "distance": 1550
+    },
+    {
+      "origin": "IAH",
+      "destination": "DEN",
+      "distance": 1380
+    },
+    {
+      "origin": "DEN",
+      "destination": "LAX",
+      "distance": 1390
+    },
+    {
+      "origin": "DEN",
+      "destination": "ORD",
+      "distance": 1430
+    },
+    {
+      "origin": "ORD",
+      "destination": "JFK",
+      "distance": 1180
+    },
+    {
+      "origin": "ORD",
+      "destination": "BOS",
+      "distance": 1360
+    },
+    {
+      "origin": "JFK",
+      "destination": "BOS",
+      "distance": 300
+    },
+    {
+      "origin": "JFK",
+      "destination": "LAX",
+      "distance": 3980
+    },
+    {
+      "origin": "BOS",
+      "destination": "JFK",
+      "distance": 300
+    },
+    {
+      "origin": "LAX",
+      "destination": "DEN",
+      "distance": 1390
+    }
+  ]
+}
