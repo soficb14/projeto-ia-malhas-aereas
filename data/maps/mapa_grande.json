@@ -44,10 +44,10 @@
     "BOS"
   ],
   "flights": [
-    {
+{
       "origin": "SEA",
       "destination": "PDX",
-      "distance": 209
+      "distance": 209    
     },
     {
       "origin": "SEA",
@@ -57,12 +57,12 @@
     {
       "origin": "SEA",
       "destination": "BOI",
-      "distance": 643
+      "distance": 643   
     },
     {
       "origin": "PDX",
       "destination": "BOI",
-      "distance": 555
+      "distance": 555    
     },
     {
       "origin": "PDX",
@@ -72,7 +72,7 @@
     {
       "origin": "BOI",
       "destination": "SLC",
-      "distance": 467
+      "distance": 467    
     },
     {
       "origin": "BOI",
@@ -82,17 +82,17 @@
     {
       "origin": "SFO",
       "destination": "SJC",
-      "distance": 50
+      "distance": 50    
     },
     {
       "origin": "SFO",
       "destination": "LAX",
-      "distance": 544
+      "distance": 544    
     },
     {
       "origin": "SJC",
       "destination": "LAX",
-      "distance": 496
+      "distance": 496    
     },
     {
       "origin": "SJC",
@@ -102,27 +102,27 @@
     {
       "origin": "LAX",
       "destination": "SAN",
-      "distance": 179
+      "distance": 179    
     },
     {
       "origin": "LAX",
       "destination": "LAS",
-      "distance": 381
+      "distance": 381    
     },
     {
       "origin": "SAN",
       "destination": "PHX",
-      "distance": 489
+      "distance": 489    
     },
     {
       "origin": "LAS",
       "destination": "PHX",
-      "distance": 412
+      "distance": 412    
     },
     {
       "origin": "LAS",
       "destination": "SLC",
-      "distance": 592
+      "distance": 592    
     },
     {
       "origin": "LAS",
@@ -132,7 +132,7 @@
     {
       "origin": "PHX",
       "destination": "ABQ",
-      "distance": 529
+      "distance": 529    
     },
     {
       "origin": "PHX",
@@ -142,12 +142,12 @@
     {
       "origin": "SLC",
       "destination": "DEN",
-      "distance": 629
+      "distance": 629    
     },
     {
       "origin": "ABQ",
       "destination": "DEN",
-      "distance": 569
+      "distance": 569    
     },
     {
       "origin": "ABQ",
@@ -172,12 +172,12 @@
     {
       "origin": "DFW",
       "destination": "IAH",
-      "distance": 362
+      "distance": 362    
     },
     {
       "origin": "DFW",
       "destination": "AUS",
-      "distance": 307
+      "distance": 307    
     },
     {
       "origin": "DFW",
@@ -187,12 +187,12 @@
     {
       "origin": "IAH",
       "destination": "AUS",
-      "distance": 226
+      "distance": 226   
     },
     {
       "origin": "IAH",
       "destination": "MSY",
-      "distance": 490
+      "distance": 490   
     },
     {
       "origin": "AUS",
@@ -202,17 +202,17 @@
     {
       "origin": "MCI",
       "destination": "OMA",
-      "distance": 269
+      "distance": 269    
     },
     {
       "origin": "MCI",
       "destination": "STL",
-      "distance": 393
+      "distance": 393    
     },
     {
       "origin": "OMA",
       "destination": "MSP",
-      "distance": 454
+      "distance": 454    
     },
     {
       "origin": "OMA",
@@ -222,22 +222,22 @@
     {
       "origin": "STL",
       "destination": "ORD",
-      "distance": 423
+      "distance": 423    
     },
     {
       "origin": "STL",
       "destination": "IND",
-      "distance": 383
+      "distance": 383    
     },
     {
       "origin": "STL",
       "destination": "MEM",
-      "distance": 414
+      "distance": 414    
     },
     {
       "origin": "MSP",
       "destination": "ORD",
-      "distance": 539
+      "distance": 539    
     },
     {
       "origin": "MSP",
@@ -247,37 +247,37 @@
     {
       "origin": "ORD",
       "destination": "DTW",
-      "distance": 383
+      "distance": 383    
     },
     {
       "origin": "ORD",
       "destination": "CLE",
-      "distance": 511
+      "distance": 511    
     },
     {
       "origin": "IND",
       "destination": "DTW",
-      "distance": 382
+      "distance": 382    
     },
     {
       "origin": "IND",
       "destination": "CLE",
-      "distance": 423
+      "distance": 423    
     },
     {
       "origin": "IND",
       "destination": "BNA",
-      "distance": 401
+      "distance": 401    
     },
     {
       "origin": "CLE",
       "destination": "DTW",
-      "distance": 154
+      "distance": 154    
     },
     {
       "origin": "CLE",
       "destination": "PIT",
-      "distance": 184
+      "distance": 184    
     },
     {
       "origin": "CLE",
@@ -287,17 +287,17 @@
     {
       "origin": "BNA",
       "destination": "MEM",
-      "distance": 322
+      "distance": 322    
     },
     {
       "origin": "BNA",
       "destination": "ATL",
-      "distance": 345
+      "distance": 345    
     },
     {
       "origin": "MEM",
       "destination": "MSY",
-      "distance": 563
+      "distance": 563    
     },
     {
       "origin": "MSY",
@@ -312,7 +312,7 @@
     {
       "origin": "ATL",
       "destination": "CLT",
-      "distance": 365
+      "distance": 365    
     },
     {
       "origin": "ATL",
@@ -322,7 +322,7 @@
     {
       "origin": "ATL",
       "destination": "JAX",
-      "distance": 450
+      "distance": 450    
     },
     {
       "origin": "CLT",
@@ -332,22 +332,22 @@
     {
       "origin": "CLT",
       "destination": "RDU",
-      "distance": 209
+      "distance": 209    
     },
     {
       "origin": "CLT",
       "destination": "JAX",
-      "distance": 530
+      "distance": 530    
     },
     {
       "origin": "CLT",
       "destination": "IAD",
-      "distance": 519
+      "distance": 519    
     },
     {
       "origin": "RDU",
       "destination": "IAD",
-      "distance": 362
+      "distance": 362    
     },
     {
       "origin": "RDU",
@@ -357,77 +357,77 @@
     {
       "origin": "JAX",
       "destination": "MCO",
-      "distance": 233
+      "distance": 233    
     },
     {
       "origin": "JAX",
       "destination": "MIA",
-      "distance": 541
+      "distance": 541    
     },
     {
       "origin": "MCO",
       "destination": "TPA",
-      "distance": 131
+      "distance": 131   
     },
     {
       "origin": "MCO",
       "destination": "MIA",
-      "distance": 330
+      "distance": 330    
     },
     {
       "origin": "TPA",
       "destination": "MIA",
-      "distance": 330
+      "distance": 330    
     },
     {
       "origin": "IAD",
       "destination": "BWI",
-      "distance": 73
+      "distance": 73    
     },
     {
       "origin": "IAD",
       "destination": "PHL",
-      "distance": 217
+      "distance": 217    
     },
     {
       "origin": "BWI",
       "destination": "PHL",
-      "distance": 145
+      "distance": 145    
     },
     {
       "origin": "BWI",
       "destination": "EWR",
-      "distance": 280
+      "distance": 280    
     },
     {
       "origin": "PHL",
       "destination": "PIT",
-      "distance": 430
+      "distance": 430    
     },
     {
       "origin": "PHL",
       "destination": "EWR",
-      "distance": 130
+      "distance": 130    
     },
     {
       "origin": "PIT",
       "destination": "EWR",
-      "distance": 512
+      "distance": 512    
     },
     {
       "origin": "EWR",
       "destination": "JFK",
-      "distance": 34
+      "distance": 34    
     },
     {
       "origin": "EWR",
       "destination": "BOS",
-      "distance": 323
+      "distance": 323    
     },
     {
       "origin": "JFK",
       "destination": "BOS",
-      "distance": 300
+      "distance": 300    
     }
   ]
 }

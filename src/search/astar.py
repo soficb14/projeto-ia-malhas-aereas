@@ -11,13 +11,12 @@ def a_star_search(
     network: AirNetwork,
     start: str,
     goal: str,
+    metric: str = "distance",  # <- Parâmetro novo para escolher a métrica
 ) -> SearchResult | None:
     """
     Executa o algoritmo A* entre dois aeroportos.
 
-    O custo da busca é a distância total percorrida.
-    A heurística utilizada é a distância em linha reta
-    entre o aeroporto atual e o destino.
+    O custo da busca pode ser configurado por distância, tempo ou preço.
     """
 
     start_airport = network.get_airport(start)
@@ -34,11 +33,14 @@ def a_star_search(
 
     frontier: list[tuple[float, int, str]] = []
 
+    # Heurística inicial (em linha reta - km)
     initial_heuristic = straight_line_distance(
         start_airport,
         goal_airport,
     )
 
+    # Se a métrica for tempo ou preço, podemos ajustar a escala da heurística se necessário,
+    # mas mantemos a base por enquanto.
     heapq.heappush(
         frontier,
         (initial_heuristic, next(counter), start),
@@ -77,7 +79,17 @@ def a_star_search(
         for flight in network.get_outgoing_flights(current):
             neighbor = flight.destination.code
 
-            new_cost = current_cost + flight.distance
+            # Seleciona dinamicamente o custo do voo com base na métrica
+            if metric == "distance":
+                flight_cost = flight.distance
+            elif metric == "estimated_time":
+                flight_cost = flight.estimated_time
+            elif metric == "price":
+                flight_cost = flight.price
+            else:
+                raise ValueError(f"Métrica desconhecida: {metric}")
+
+            new_cost = current_cost + flight_cost
 
             previous_cost = cost_so_far.get(neighbor)
 
@@ -87,10 +99,18 @@ def a_star_search(
             cost_so_far[neighbor] = new_cost
             parent[neighbor] = current
 
+            # Heurística: se a métrica for diferente de distância pura, 
+            # podes calibrar/converter a heurística proporcionalmente se desejar.
             heuristic = straight_line_distance(
                 flight.destination,
                 goal_airport,
             )
+            
+            # Ajuste proporcional simples de exemplo para tempo/preço se quiseres manter a admissibilidade:
+            if metric == "estimated_time":
+                heuristic = heuristic / 800.0 * 60.0  # Exemplo: conversão baseada em velocidade Média
+            elif metric == "price":
+                heuristic = heuristic * 0.15          # Exemplo: custo médio por km em dólar
 
             priority = new_cost + heuristic
 

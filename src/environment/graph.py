@@ -26,6 +26,22 @@ class AirNetwork:
 
         self.airports[airport.code] = airport
 
+    def get_flight_cost(self, flight: Flight, metric: str = "distance") -> float:
+        """
+        Retorna o custo de um voo com base na métrica especificada:
+        - 'distance': distância em km
+        - 'estimated_time': tempo estimado em minutos
+        - 'price': preço em dólares
+        """
+        if metric == "distance":
+            return flight.distance
+        elif metric == "estimated_time":
+            return flight.estimated_time
+        elif metric == "price":
+            return flight.price
+        else:
+            raise ValueError(f"Métrica de custo desconhecida: {metric}")
+
     def add_flight(self, flight: Flight) -> None:
         """
         Adiciona um voo direcionado à malha.

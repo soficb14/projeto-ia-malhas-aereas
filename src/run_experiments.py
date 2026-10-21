@@ -23,18 +23,16 @@ ROUTES = {
     "grande": ("SEA", "BOS"),
 }
 
+# Definimos as métricas que queremos testar para o A*
+METRICS = ["distance", "estimated_time", "price"]
+
 
 def run_all_experiments() -> list[ExperimentResult]:
     """
-    Executa BFS e A* nos três mapas da Fase I.
+    Executa BFS e A* (para múltiplas métricas) nos três mapas da Fase I.
     """
 
     results = []
-
-    algorithms = [
-        ("BFS", breadth_first_search),
-        ("A*", a_star_search),
-    ]
 
     for map_name, map_path in MAPS.items():
         network = load_network(
@@ -44,11 +42,29 @@ def run_all_experiments() -> list[ExperimentResult]:
 
         start, goal = ROUTES[map_name]
 
-        for algorithm_name, search_function in algorithms:
+        # 1. Executa o BFS tradicional (otimiza por saltos/distância padrão)
+        bfs_result = run_experiment(
+            map_name=map_name,
+            algorithm="BFS",
+            search_function=breadth_first_search,
+            network=network,
+            start=start,
+            goal=goal,
+        )
+        results.append(bfs_result)
+
+        # 2. Executa o A* para cada uma das métricas multiobjetivo
+        for metric in METRICS:
+            alg_name = f"A* ({metric})"
+            
+            # Criamos uma função lambda para prender o parâmetro 'metric' na chamada do A*
+            def a_star_wrapped(net, s, g):
+                return a_star_search(net, s, g, metric=metric)
+
             result = run_experiment(
                 map_name=map_name,
-                algorithm=algorithm_name,
-                search_function=search_function,
+                algorithm=alg_name,
+                search_function=a_star_wrapped,
                 network=network,
                 start=start,
                 goal=goal,
@@ -64,19 +80,19 @@ def print_results(results: list[ExperimentResult]) -> None:
     Exibe os resultados dos experimentos no terminal.
     """
 
-    print("\nRESULTADOS DOS EXPERIMENTOS — FASE I")
-    print("=" * 90)
+    print("\nRESULTADOS DOS EXPERIMENTOS — MÚLTIPLAS MÉTRICAS")
+    print("=" * 95)
 
     header = (
         f"{'Mapa':<10}"
-        f"{'Algoritmo':<12}"
-        f"{'Custo (km)':>14}"
+        f"{'Algoritmo / Métrica':<20}"
+        f"{'Custo':>14}"
         f"{'Nós expandidos':>18}"
         f"{'Tempo (ms)':>14}"
     )
 
     print(header)
-    print("-" * 90)
+    print("-" * 95)
 
     for result in results:
         cost = (
@@ -87,13 +103,13 @@ def print_results(results: list[ExperimentResult]) -> None:
 
         print(
             f"{result.map_name:<10}"
-            f"{result.algorithm:<12}"
+            f"{result.algorithm:<20}"
             f"{cost:>14}"
             f"{result.expanded_nodes:>18}"
             f"{result.execution_time_ms:>14.4f}"
         )
 
-    print("=" * 90)
+    print("=" * 95)
 
 
 if __name__ == "__main__":

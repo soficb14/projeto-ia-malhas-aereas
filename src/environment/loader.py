@@ -79,10 +79,24 @@ def load_network(
         origin = network.get_airport(origin_code)
         destination = network.get_airport(destination_code)
 
+        distance = flight_data["distance"]
+
+        # 1. Tempo estimado: usa o do JSON se existir, senão calcula pela distância
+        estimated_time = flight_data.get("estimated_time_min")
+        if estimated_time is None:
+            estimated_time = (distance / 800.0) * 60 + 30.0
+
+        # 2. Preço: usa o do JSON se existir, senão calcula pela distância
+        price = flight_data.get("price_usd")
+        if price is None:
+            price = (distance * 0.12) + 50.0
+
         flight = Flight(
             origin=origin,
             destination=destination,
-            distance=flight_data["distance"],
+            distance=distance,
+            estimated_time=estimated_time,
+            price=price,
         )
 
         network.add_flight(flight)
