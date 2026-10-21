@@ -14,8 +14,8 @@ class Flight:
     origin: Airport
     destination: Airport
     distance: float
-    estimated_time: float = 0.0
-    price: float = 0.0
+    estimated_time: float
+    price: float
 
     def __post_init__(self) -> None:
         if self.distance <= 0:

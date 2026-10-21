@@ -81,15 +81,18 @@ def load_network(
 
         distance = flight_data["distance"]
 
-        # 1. Tempo estimado: usa o do JSON se existir, senão calcula pela distância
-        estimated_time = flight_data.get("estimated_time_min")
-        if estimated_time is None:
-            estimated_time = (distance / 800.0) * 60 + 30.0
+        # 1. Estimativa de Tempo Estimado (estimated_time_min):
+        # Este valor calcula o tempo total de voo em minutos utilizando uma abordagem linear com base na distância. 
+        # A fórmula divide a distância por uma velocidade média de cruzeiro de 800 km/h (convertendo para minutos com * 60) 
+        # e soma uma taxa fixa operacional de 30 minutos para cobrir manobras em solo, descolagem e aterragem.
 
-        # 2. Preço: usa o do JSON se existir, senão calcula pela distância
-        price = flight_data.get("price_usd")
-        if price is None:
-            price = (distance * 0.12) + 50.0
+        estimated_time = (distance / 800.0) * 60 + 30.0
+
+        # Este valor calcula o custo monetário estimado da viagem em dólares americanos (USD). 
+        # A fórmula aplica uma taxa variável proporcional de $0.12 por quilómetro percorrido e adiciona uma tarifa 
+        # base fixa de $50.00, simulando taxas aeroportuárias e custos fixos de bilheteira independentemente da distância.
+        
+        price = (distance * 0.12) + 50.0
 
         flight = Flight(
             origin=origin,
