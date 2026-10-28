@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from .environment.loader import load_network
+from ..environment.loader import load_network
 from .experiments import ExperimentResult, run_experiment
-from .search.astar import a_star_search
-from .search.bfs import breadth_first_search
+from ..search.astar import a_star_search
+from ..search.bfs import breadth_first_search
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
