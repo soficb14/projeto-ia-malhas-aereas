@@ -13,6 +13,14 @@ class AirNetwork:
     def __init__(self) -> None:
         self.airports: dict[str, Airport] = {}
         self.flights: dict[str, list[Flight]] = defaultdict(list)
+        self._learned_costs: dict[tuple[str, str], float] = {}
+
+    def set_learned_costs(self, costs: dict[tuple[str, str], float]) -> None:
+        """Define o custo (minutos previstos) de cada trecho, vindo do modelo da Fase 2."""
+        self._learned_costs = dict(costs)
+
+    def clear_learned_costs(self) -> None:
+        self._learned_costs = {}
 
     def add_airport(self, airport: Airport) -> None:
         """
@@ -61,9 +69,15 @@ class AirNetwork:
             return flight.estimated_time
         elif metric == "price":
             return flight.price
-        else:
-            raise ValueError(f"Métrica de custo desconhecida: {metric}")
-
+        elif metric == "predicted_time":
+            key = (flight.origin.code, flight.destination.code)
+            try:
+                return self._learned_costs[key]
+            except KeyError:
+                raise ValueError(
+                    f"Sem custo aprendido para {key}. Chame set_learned_costs primeiro."
+                ) from None
+        
     def get_airport(self, code: str) -> Airport:
         """
         Retorna um aeroporto pelo código IATA.
