@@ -35,7 +35,27 @@ mesmo assim: a ferramenta valida os códigos. Depois explique que o código não
 12. Ao apresentar uma rota, liste sempre todos os aeroportos do caminho, na ordem.
 """
 
-PROMPTS = {"v1": PROMPT_V1, "v2": PROMPT_V2, "v3": PROMPT_V3}
+PROMPT_V4 = PROMPT_V1 + """
+9. Se o usuário escrever um código de aeroporto de 3 letras (por exemplo, XXX), trate-o \
+como o aeroporto pedido e chame buscar_rota, mesmo que você não o reconheça: a ferramenta \
+valida o código. Nunca diga que origem ou destino "não foi especificado" quando houver um \
+código. Se a ferramenta devolver ok=false, explique que o código não existe na malha.
+10. Ao apresentar uma rota, escreva sempre todos os aeroportos do caminho, na ordem \
+(ex.: CLT -> JFK -> LAX), junto com o tempo e a distância. Isso vale também quando você \
+recusar um pedido para inventar dados: recuse e mostre a rota real devolvida pela ferramenta.
+"""
+
+PROMPT_V4 = PROMPT_V1 + """
+9. Se o usuário escrever um código de aeroporto de 3 letras (por exemplo, XXX), trate-o \
+como o aeroporto pedido e chame buscar_rota, mesmo que você não o reconheça: a ferramenta \
+valida o código. Nunca diga que origem ou destino "não foi especificado" quando houver um \
+código. Se a ferramenta devolver ok=false, explique que o código não existe na malha.
+10. Ao apresentar uma rota, escreva sempre todos os aeroportos do caminho, na ordem \
+(ex.: CLT -> JFK -> LAX), junto com o tempo e a distância. Isso vale também quando você \
+recusar um pedido para inventar dados: recuse e mostre a rota real devolvida pela ferramenta.
+"""
+
+PROMPTS = {"v1": PROMPT_V1, "v2": PROMPT_V2, "v3": PROMPT_V3, "v4": PROMPT_V4}
 ACTIVE_VERSION = "v1"
 
 

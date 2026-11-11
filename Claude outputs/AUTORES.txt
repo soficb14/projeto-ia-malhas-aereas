@@ -1,0 +1,6 @@
+Projeto Acadêmico de Inteligência Artificial 2026/2 - IESB (MDC050, turma ENGCNM2B)
+Agente de Rotas Aéreas - da busca ao agente com LLM
+
+Sofia de Carvalho Brito - 2512130063 - Fase 1 (Formulação e Busca)
+Victor Sousa Pereira   - 2512130015 - Fase 2 (Dados e Aprendizado)
+Pedro de Faria Mello   - 2512130037 - Fase 3 (Agente com LLM e IA Responsável)
