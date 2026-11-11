@@ -5,14 +5,22 @@ import time
 
 import pandas as pd
 
-from src.agent.agent import FlightAgent
 from src.agent.backend_projeto import ProjetoBackend
+from src.agent.fabrica import BACKENDS, criar_agente
 from src.agent.tools import FlightTools
 from src.environment.dataset import generate_synthetic_flight_dataset
 from src.environment.loader import load_network
 from src.environment.model import train_and_evaluate
 
-PAUSA_S = 6   # pausa entre pedidos, para não estourar o limite do plano gratuito
+PAUSA_S = {"qwen": 0, "openrouter": 6}   # OpenRouter: pausa para não estourar o plano gratuito
+FALHAS_SEGUIDAS_MAX = 3                   # para tudo se a API falhar este tanto de vezes seguidas
+
+
+def caminho_resultado(prompt_version: str, backend: str) -> str:
+    """Os resultados do OpenRouter mantêm o nome antigo (fase3_avaliacao_v1.csv)."""
+    if backend == "openrouter":
+        return f"results/fase3_avaliacao_{prompt_version}.csv"
+    return f"results/fase3_avaliacao_{backend}_{prompt_version}.csv"
 
 
 def rota_valida(network, rota, origem, destino) -> bool:
@@ -42,21 +50,22 @@ def args_ok(esperado: dict, real: dict) -> bool:
     return True
 
 
-def avaliar(caminho="data/pedidos_teste.json", model=None, prompt_version="v1"):
+def avaliar(caminho="data/pedidos_teste.json", model=None, prompt_version="v1",
+            backend="qwen"):
     network = load_network("data/maps/mapa_medio.json", "data/maps/airports.json")
     pipeline, _, _ = train_and_evaluate(generate_synthetic_flight_dataset(network))
-    backend = ProjetoBackend(network, pipeline, aircraft_type="Narrow-body")
-    tools = FlightTools(backend)
-    agent = FlightAgent(tools, prompt_version=prompt_version,
-                        **({"model": model} if model else {}))
+    projeto = ProjetoBackend(network, pipeline, aircraft_type="Narrow-body")
+    tools = FlightTools(projeto)
+    agent = criar_agente(tools, backend=backend, prompt_version=prompt_version, model=model)
 
     with open(caminho, encoding="utf-8") as f:
         pedidos = json.load(f)
 
     linhas = []
+    seguidas = 0
     for p in pedidos:
         r = agent.run(p["pedido"])
-        time.sleep(PAUSA_S)
+        time.sleep(PAUSA_S.get(backend, 0))
         esp = p["espera"]
         buscas = [c for c in r["chamadas"] if c["nome"] == "buscar_rota"]
         usou = bool(buscas)
@@ -88,10 +97,17 @@ def avaliar(caminho="data/pedidos_teste.json", model=None, prompt_version="v1"):
                        "erro": r["erro"], "pedido": p["pedido"], "resposta": r["resposta"]})
         print(f"[{p['id']:>2}] {'OK ' if acerto else 'FALHA'} | {p['pedido'][:60]}")
 
+        seguidas = seguidas + 1 if (r["erro"] or "").startswith("Erro da API") else 0
+        if seguidas >= FALHAS_SEGUIDAS_MAX:
+            print(f"\nA API falhou {seguidas} vezes seguidas (provável limite de cota). "
+                  "Avaliação interrompida e NADA foi salvo.")
+            return None
+
     df = pd.DataFrame(linhas)
     os.makedirs("results", exist_ok=True)
-    df.to_csv(f"results/fase3_avaliacao_{prompt_version}.csv", index=False)
-    print(f"\nPrompt: {prompt_version}")
+    destino = caminho_resultado(prompt_version, backend)
+    df.to_csv(destino, index=False)
+    print(f"\nModelo: {backend} | Prompt: {prompt_version} | salvo em {destino}")
     print(f"Acertos: {int(df['acerto'].sum())}/{len(df)}")
     print(f"Tokens: {df['tokens_in'].sum()} entrada / {df['tokens_out'].sum()} saída")
     print(f"Latência média: {df['latencia_s'].mean():.1f}s")
@@ -99,4 +115,9 @@ def avaliar(caminho="data/pedidos_teste.json", model=None, prompt_version="v1"):
 
 
 if __name__ == "__main__":
-    avaliar(prompt_version=sys.argv[1] if len(sys.argv) > 1 else "v1")
+    # uso: python -m src.agent.avaliar [v1|v2|v3|v4] [qwen|openrouter]
+    versao = sys.argv[1] if len(sys.argv) > 1 else "v1"
+    modelo_llm = sys.argv[2] if len(sys.argv) > 2 else "qwen"
+    if modelo_llm not in BACKENDS:
+        sys.exit(f"Segundo argumento deve ser um de {BACKENDS}.")
+    avaliar(prompt_version=versao, backend=modelo_llm)
