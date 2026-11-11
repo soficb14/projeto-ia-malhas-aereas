@@ -1,93 +1,100 @@
 import random
 from dataclasses import dataclass, asdict
+
 import pandas as pd
 
 from .graph import AirNetwork
-from .flight import Flight
 
 
 @dataclass
 class FlightDatasetRow:
     """
-    Representa uma amostra/observação de um voo no mundo real com variáveis
-    ambientais e operacionais para a Fase 2.
+    Uma observação de voo (Fase 2). weather_condition e wind_component
+    podem ser NaN, simulando falhas de coleta.
     """
     origin: str
     destination: str
     distance: float
-    aircraft_type: str           # Ex: "Turboprop", "Narrow-body", "Wide-body"
-    route_congestion_index: int  # Congestionamento do corredor aéreo (1 a 5)
-    weather_condition: str       # Ex: "Clear", "Rain", "Snow", "Storm"
-    wind_component: float        # Vento em nós (-25 a +25)
-    time_of_day: str             # Ex: "Peak" (pico) ou "Off-peak" (fora de pico)
-    real_elapsed_time: float     # Variável Alvo (Y) - Tempo real observado em minutos
+    aircraft_type: str           # "Turboprop", "Narrow-body", "Wide-body"
+    route_congestion_index: int  # 1 a 5
+    weather_condition: str | float   # "Clear", "Rain", "Snow", "Storm" (ou NaN)
+    wind_component: float            # nós; + cauda, - proa (ou NaN)
+    time_of_day: str                 # "Peak" ou "Off-peak"
+    real_elapsed_time: float         # alvo (Y), em minutos
+
+
+# Perfil de cada aeronave: multiplicadores sobre clima, vento e tempo base
+AIRCRAFT_PROFILE = {
+    "Turboprop":   {"weather": 1.5, "wind": 1.6, "speed": 1.15},
+    "Narrow-body": {"weather": 1.0, "wind": 1.0, "speed": 1.00},
+    "Wide-body":   {"weather": 0.7, "wind": 0.6, "speed": 0.95},
+}
+WEATHER_PENALTIES = {"Clear": 0.0, "Rain": 15.0, "Snow": 35.0, "Storm": 60.0}
+TIME_PERIODS = ["Peak", "Off-peak"]
 
 
 def generate_synthetic_flight_dataset(
-    network: AirNetwork, 
-    samples_per_flight: int = 20, 
-    seed: int = 42
+    network: AirNetwork,
+    samples_per_flight: int = 20,
+    seed: int = 42,
+    missing_rate: float = 0.03,
 ) -> pd.DataFrame:
     """
-    Gera um DataFrame sintético do Pandas contendo dados de observação
-    para todos os voos cadastrados na malha aérea (AirNetwork).
-    
-    :param network: Instância da malha aérea (AirNetwork).
-    :param samples_per_flight: Quantidade de observações/amostras por trecho de voo.
-    :param seed: Semente aleatória para reprodutibilidade dos experimentos.
-    :return: pandas.DataFrame com as colunas de características e a variável alvo real_elapsed_time.
+    Gera o dataset sintético de observações para todos os voos da malha.
+
+    :param missing_rate: fração de valores apagados em weather_condition e
+                         wind_component (0 desliga os faltantes).
     """
-    random.seed(seed)
-    
-    aircraft_types = ["Turboprop", "Narrow-body", "Wide-body"]
-    weather_conditions = ["Clear", "Rain", "Snow", "Storm"]
-    time_periods = ["Peak", "Off-peak"]
+    rng = random.Random(seed)
+    nan = float("nan")
+    aircraft_types = list(AIRCRAFT_PROFILE)
+    weathers = list(WEATHER_PENALTIES)
+    rows = []
 
-    weather_penalties = {
-        "Clear": 0.0,
-        "Rain": 15.0,
-        "Snow": 35.0,
-        "Storm": 60.0
-    }
-
-    dataset_rows = []
-
-    # Iterar por todos os voos existentes na malha
-    for origin_code, flight_list in network.flights.items():
+    for flight_list in network.flights.values():
         for flight in flight_list:
-            distance = flight.distance
-            
-            # Aproveita o cálculo base de tempo teórico que já tinhas no projeto
             base_time = flight.estimated_time
 
             for _ in range(samples_per_flight):
-                aircraft = random.choice(aircraft_types)
-                congestion = random.randint(1, 5)
-                weather = random.choice(weather_conditions)
-                wind = random.uniform(-25.0, 25.0)  # Vento positivo = cauda, negativo = proa
-                time_day = random.choice(time_periods)
+                aircraft = rng.choice(aircraft_types)
+                profile = AIRCRAFT_PROFILE[aircraft]
+                congestion = rng.randint(1, 5)
+                weather = rng.choice(weathers)
+                wind = round(rng.uniform(-25.0, 25.0), 1)
+                time_day = rng.choice(TIME_PERIODS)
+                peak = time_day == "Peak"
 
-                # Cálculo sintético do tempo real (variável alvo Y) com base nos obstáculos
-                weather_delay = weather_penalties[weather]
-                congestion_delay = congestion * 4.0
-                peak_delay = 20.0 if time_day == "Peak" else 0.0
-                wind_impact = -0.4 * wind  
-                random_noise = random.gauss(0, 5.0)
+                # --- tempo real (alvo), calculado com os valores VERDADEIROS ---
+                weather_delay = WEATHER_PENALTIES[weather] * profile["weather"]
+                congestion_delay = congestion * 4.0 * (1.5 if peak else 1.0)
+                peak_delay = 20.0 if peak else 0.0
+                storm_peak_delay = 15.0 if (weather == "Storm" and peak) else 0.0
+                wind_impact = -0.4 * wind * profile["wind"] * (base_time / 120.0)
+                noise_sd = 3.0 + (6.0 if weather in ("Storm", "Snow") else 0.0)
+                noise = rng.gauss(0, noise_sd)
 
-                real_time = base_time + weather_delay + congestion_delay + peak_delay + wind_impact + random_noise
-                real_time = max(real_time, base_time * 0.75)  # Limite físico mínimo
+                real_time = (
+                    base_time * profile["speed"]
+                    + weather_delay + congestion_delay + peak_delay
+                    + storm_peak_delay + wind_impact + noise
+                )
+                real_time = max(real_time, base_time * 0.75)  # limite físico
+
+                # --- falhas de coleta: apaga DEPOIS de calcular o alvo ---
+                observed_weather = nan if rng.random() < missing_rate else weather
+                observed_wind = nan if rng.random() < missing_rate else wind
 
                 row = FlightDatasetRow(
                     origin=flight.origin.code,
                     destination=flight.destination.code,
-                    distance=distance,
+                    distance=flight.distance,
                     aircraft_type=aircraft,
                     route_congestion_index=congestion,
-                    weather_condition=weather,
-                    wind_component=round(wind, 1),
+                    weather_condition=observed_weather,
+                    wind_component=observed_wind,
                     time_of_day=time_day,
-                    real_elapsed_time=round(real_time, 2)
+                    real_elapsed_time=round(real_time, 2),
                 )
-                dataset_rows.append(asdict(row))
+                rows.append(asdict(row))
 
-    return pd.DataFrame(dataset_rows)
+    return pd.DataFrame(rows)

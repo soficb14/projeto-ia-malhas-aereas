@@ -3,7 +3,8 @@ from src.environment.dataset import generate_synthetic_flight_dataset
 from src.environment.model import train_and_evaluate, build_cost_map, error_analysis
 from src.search.astar import a_star_search
 from src.search.heuristics import MAX_SPEED_KMH, check_heuristic
-
+import os
+import pandas as pd
 
 def route_str(result) -> str:
     if result is None:
@@ -32,7 +33,8 @@ def main():
     # 3. Dataset sintético
     print("\n[3/5] Gerando o dataset sintético...")
     df = generate_synthetic_flight_dataset(network, samples_per_flight=20)
-    print(f"-> {len(df)} linhas")
+    print(f"-> {len(df)} linhas | faltantes por coluna:")
+    print(df.isna().sum()[lambda s: s > 0].to_string())
 
     # 4. Treino e comparação dos modelos
     print("\n[4/5] Treinando e comparando os modelos...")
@@ -101,6 +103,17 @@ def main():
     print(f"\nPares em que a rota muda: {len(diferentes)}")
     for item in diferentes[:5]:
         print(item)
+
+    # 6. Salvar resultados para o relatório
+    os.makedirs("results", exist_ok=True)
+    df.to_csv("results/fase2_dataset.csv", index=False)
+    results.round(2).to_csv("results/fase2_metricas.csv")
+    for col, tabela in error_analysis(*holdout).items():
+        tabela.to_csv(f"results/fase2_erro_{col}.csv")
+    pd.DataFrame(
+        diferentes, columns=["origem", "destino", "rota_distancia", "rota_tempo"]
+    ).to_csv("results/fase2_rotas_que_mudam.csv", index=False)
+    print("\n-> Resultados salvos em results/")
 
     print("\n=== CONCLUÍDO ===")
 
