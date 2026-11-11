@@ -1,0 +1,4 @@
+modelo,cv_mae,cv_mae_std,cv_rmse,teste_mae,teste_rmse
+Baseline (média),47.1,4.46,64.59,42.79,52.09
+Linear Regression,10.58,0.79,14.52,8.58,10.9
+Random Forest,10.76,0.97,16.15,8.35,11.08
