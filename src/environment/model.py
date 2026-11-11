@@ -1,77 +1,104 @@
-import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
+import pandas as pd
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from sklearn.pipeline import Pipeline
+from sklearn.dummy import DummyRegressor
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.model_selection import GroupKFold, KFold, cross_validate, train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+NUMERICAL = ["distance", "route_congestion_index", "wind_component"]
+CATEGORICAL = ["aircraft_type", "weather_condition", "time_of_day"]
+FEATURES = NUMERICAL + CATEGORICAL
+TARGET = "real_elapsed_time"
 
 
-def preprocess_and_train(df: pd.DataFrame):
-    """
-    Realiza o pré-processamento dos dados, faz a divisão de treino/teste,
-    treina dois modelos de Machine Learning e avalia a performance de ambos.
-    """
-    # 1. Separar features (X) e variável alvo (y)
-    X = df.drop(columns=["origin", "destination", "real_elapsed_time"])
-    y = df["real_elapsed_time"]
+def build_preprocessor() -> ColumnTransformer:
+    num = Pipeline([("imputer", SimpleImputer(strategy="median")),
+                    ("scaler", StandardScaler())])
+    cat = Pipeline([("imputer", SimpleImputer(strategy="most_frequent")),
+                    ("onehot", OneHotEncoder(handle_unknown="ignore"))])
+    return ColumnTransformer([("num", num, NUMERICAL), ("cat", cat, CATEGORICAL)])
 
-    # Identificar colunas categóricas e numéricas
-    categorical_features = ["aircraft_type", "weather_condition", "time_of_day"]
-    numerical_features = [col for col in X.columns if col not in categorical_features]
 
-    # 2. Configurar o pré-processamento (Pipeline de transformação)
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ("num", StandardScaler(), numerical_features),
-            ("cat", OneHotEncoder(drop="first", handle_unknown="ignore"), categorical_features)
-        ]
-    )
+def train_and_evaluate(df: pd.DataFrame, seed: int = 42, n_splits: int = 5,
+                       group_by_route: bool = False):
+    X, y = df[FEATURES], df[TARGET]
+    groups = df["origin"] + "-" + df["destination"]
 
-    # 3. Divisão em dados de treino (80%) e teste (20%)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_tr, X_te, y_tr, y_te, g_tr, _ = train_test_split(
+        X, y, groups, test_size=0.2, random_state=seed)
 
-    # 4. Definir os modelos a comparar (exigência da Fase 2: pelo menos dois modelos)
+    cv = GroupKFold(n_splits=n_splits) if group_by_route \
+        else KFold(n_splits=n_splits, shuffle=True, random_state=seed)
+
     models = {
+        "Baseline (média)": DummyRegressor(strategy="mean"),
         "Linear Regression": LinearRegression(),
-        "Random Forest": RandomForestRegressor(n_estimators=50, random_state=42)
+        "Random Forest": RandomForestRegressor(n_estimators=100, random_state=seed),
     }
 
-    trained_pipelines = {}
-    evaluation_results = {}
-
-    print("--- Resultados da Avaliação dos Modelos (Fase 2) ---")
-    
+    rows, pipelines = [], {}
     for name, model in models.items():
-        # Criar pipeline unindo o pré-processamento e o estimador de ML
-        pipeline = Pipeline(steps=[
-            ("preprocessor", preprocessor),
-            ("model", model)
-        ])
+        pipe = Pipeline([("prep", build_preprocessor()), ("model", model)])
+        cv_res = cross_validate(
+            pipe, X_tr, y_tr, cv=cv, groups=g_tr if group_by_route else None,
+            scoring={"mae": "neg_mean_absolute_error",
+                     "rmse": "neg_root_mean_squared_error"})
+        pipe.fit(X_tr, y_tr)
+        pred = pipe.predict(X_te)
+        rows.append({
+            "modelo": name,
+            "cv_mae": -cv_res["test_mae"].mean(),
+            "cv_mae_std": cv_res["test_mae"].std(),
+            "cv_rmse": -cv_res["test_rmse"].mean(),
+            "teste_mae": mean_absolute_error(y_te, pred),
+            "teste_rmse": np.sqrt(mean_squared_error(y_te, pred)),
+        })
+        pipelines[name] = pipe
 
-        # Treinar o modelo
-        pipeline.fit(X_train, y_train)
-        
-        # Fazer previsões no conjunto de teste
-        y_pred = pipeline.predict(X_test)
+    results = pd.DataFrame(rows).set_index("modelo")
+    best = results.drop(index="Baseline (média)")["cv_mae"].idxmin()
+    return pipelines[best], results, (X_te, y_te, pipelines[best].predict(X_te))
 
-        # Avaliar métricas (MAE e RMSE)
-        mae = mean_absolute_error(y_test, y_pred)
-        rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 
-        evaluation_results[name] = {"MAE": mae, "RMSE": rmse}
-        trained_pipelines[name] = pipeline
+def error_analysis(X_te, y_te, y_pred) -> dict:
+    d = X_te.copy()
+    d["erro_abs"] = (y_te - y_pred).abs()
+    cols = ["weather_condition", "time_of_day", "aircraft_type", "route_congestion_index"]
+    return {c: d.groupby(c)["erro_abs"].mean().round(2) for c in cols}
 
-        print(f"\nModelo: {name}")
-        print(f"  - Erro Médio Absoluto (MAE): {mae:.2f} minutos")
-        print(f"  - Raiz do Erro Quadrático Médio (RMSE): {rmse:.2f} minutos")
 
-    print("-" * 50)
+def predict_time(pipeline, distance, aircraft_type, congestion,
+                 weather, wind, time_of_day) -> float:
+    row = pd.DataFrame([{
+        "distance": distance, "aircraft_type": aircraft_type,
+        "route_congestion_index": congestion, "weather_condition": weather,
+        "wind_component": wind, "time_of_day": time_of_day}])
+    return max(float(pipeline.predict(row)[0]), 1.0)
+
+def build_cost_map(network, pipeline, context: dict,
+                   overrides: dict | None = None,
+                   max_speed_km_h: float = 900.0) -> dict:
+    """
+    context: {"aircraft_type", "route_congestion_index", "weather_condition",
+              "wind_component", "time_of_day"}
+    overrides: {(origem, destino): {campo: valor}}, para eventos pontuais
+               (tempestade num trecho, congestionamento extremo etc.)
+    """
+    rows, keys, floors = [], [], []
+
+    for flights in network.flights.values():
+        for f in flights:
+            key = (f.origin.code, f.destination.code)
+            ctx = {**context, **(overrides or {}).get(key, {})}
+            rows.append({"distance": f.distance, **ctx})
+            keys.append(key)
+            floors.append(f.distance / max_speed_km_h * 60)  # minutos
+
     
-    # Retorna o melhor modelo treinado (por exemplo, com menor MAE) para futuras predições na busca A*
-    best_model_name = min(evaluation_results, key=lambda k: evaluation_results[k]["MAE"])
-    print(f"Melhor modelo selecionado para integração no A*: {best_model_name}")
-
-    return trained_pipelines[best_model_name]
+        preds = pipeline.predict(pd.DataFrame(rows)[FEATURES])
+    return {k: max(float(p), fl) for k, p, fl in zip(keys, preds, floors)}
