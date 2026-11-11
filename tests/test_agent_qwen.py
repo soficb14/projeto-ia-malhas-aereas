@@ -5,7 +5,7 @@ import json
 from src.agent.agent_qwen import QwenAgent, extrair_chamadas, normalizar_args
 from src.agent.fabrica import criar_agente
 from src.agent.tools import FlightTools
-from tests.test_tools import FakeBackend
+from test_tools import FakeBackend   # pytest põe a pasta tests/ no sys.path
 
 
 def _agente(saidas):
